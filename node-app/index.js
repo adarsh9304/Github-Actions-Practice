@@ -1,8 +1,11 @@
-const express=require('express')
-const app=express();
+const express = require('express');
+const app = express();
 
-app.get('/',(req,res)=>{
-    res.send('This is from Node app')
-})
+app.get('/', (req, res) => {
+    res.send('This is from Node app');
+});
 
-app.listen(5000,console.log('app is running on 5000'))
+const PORT = 5000;
+app.listen(PORT, () => console.log(`app is running on ${PORT}`));
+
+module.exports = app;
