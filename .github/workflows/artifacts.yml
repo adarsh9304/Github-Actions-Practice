@@ -27,10 +27,32 @@ jobs:
           mkdir -p test-reports
           npm test > test-reports/test-log.txt
 
-        # The > part means that the output of the tests (logs, results, errors) will be redirected to a file named test-log.txt inside the test-reports folder.
+       download:
+    name: Download Artifacts from Previous Job
+    runs-on: ubuntu-latest
+    needs: test  # This ensures the download job waits for the test job to complete
 
-      - name: Upload Test Artifacts
+    steps:
+      - name: Download Test Artifacts
         uses: actions/download-artifact@v3
         with:
           name: test-reports
+          path: ./downloaded-reports  # Path where the artifact will be downloaded
+
+      - name: Upload Test Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
           path: test-reports/
+
+download:
+    name: Download Artifacts from Previous Job
+    runs-on: ubuntu-latest
+    needs: test  # This ensures the download job waits for the test job to complete
+
+    steps:
+      - name: Download Test Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: test-reports
+          path: ./downloaded-reports  # Path where the artifact will be downloaded
