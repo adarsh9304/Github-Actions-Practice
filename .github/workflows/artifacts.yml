@@ -27,8 +27,10 @@ jobs:
           mkdir -p test-reports
           npm test > test-reports/test-log.txt
 
+        # The > part means that the output of the tests (logs, results, errors) will be redirected to a file named test-log.txt inside the test-reports folder.
+
       - name: Upload Test Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v3
         with:
           name: test-reports
           path: test-reports/
