@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    name: Run Tests and Save Artifacts
+    name: Run Tests and Upload Artifacts
     runs-on: ubuntu-latest
 
     steps:
@@ -27,25 +27,13 @@ jobs:
           mkdir -p test-reports
           npm test > test-reports/test-log.txt
 
-       download:
-    name: Download Artifacts from Previous Job
-    runs-on: ubuntu-latest
-    needs: test  # This ensures the download job waits for the test job to complete
-
-    steps:
-      - name: Download Test Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: test-reports
-          path: ./downloaded-reports  # Path where the artifact will be downloaded
-
       - name: Upload Test Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: test-reports
           path: test-reports/
 
-download:
+  download:
     name: Download Artifacts from Previous Job
     runs-on: ubuntu-latest
     needs: test  # This ensures the download job waits for the test job to complete
